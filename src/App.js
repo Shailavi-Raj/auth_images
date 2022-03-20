@@ -1,13 +1,12 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import SignUp from "./components/SignUp";
+import "rsuite/dist/rsuite.css";
+import Home from "./components/Home";
+//import Otp from "./components/Otp";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<SignUp />} />
-      </Routes>
+      <Home />
     </div>
   );
 }

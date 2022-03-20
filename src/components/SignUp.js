@@ -1,58 +1,88 @@
 import React from "react";
-import firebase from "firebase/app";
-import { Container, Grid, Row, Panel, Col, Button, Icon, Alert } from "rsuite";
-import { auth, database } from "../firebase";
+import { Container, Grid, Row, Panel, Button, Col, Input } from "rsuite";
+
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const signInWithProvider = async (provider) => {
-    try {
-      const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
-
-      if (additionalUserInfo.isNewUser) {
-        await database.ref(`/profiles/${user.uid}`).set({
-          name: user.displayName,
-          createdAt: firebase.database.ServerValue.TIMESTAMP,
-        });
-      }
-
-      Alert.success("Signed in", 4000);
-    } catch (err) {
-      Alert.error(err.message, 4000);
-    }
-  };
-
-  const onFacebookSignIn = () => {
-    signInWithProvider(new firebase.auth.FacebookAuthProvider());
-  };
-
-  const onGoogleSignIn = () => {
-    signInWithProvider(new firebase.auth.GoogleAuthProvider());
-  };
-
   return (
-    <Container>
-      <Grid className="mt-page">
-        <Row>
-          <Col xs={24} md={12}>
-            <Panel>
-              <div className="text-center">Yamak.ai</div>
+    <div className="signup">
+      <Container>
+        <Grid>
+          <Row>
+            <Col xs={24} md={12}>
+              <Panel>
+                <div className="text-center">
+                  {" "}
+                  <h2
+                    style={{
+                      color: "blue",
+                    }}
+                  >
+                    Yamak.ai
+                  </h2>
+                </div>
+                <br />
+                <div>
+                  <h3>Create An Account</h3>
+                </div>
+                <br />
 
-              <div className="mt-3">
-                <Button block color="blue" onClick={onFacebookSignIn}>
-                  <Icon icon="facebook" />
-                  Continue with Facebook
-                </Button>
-
-                <Button block color="green" onClick={onGoogleSignIn}>
-                  <Icon icon="google" />
+                <div>
+                  {" "}
+                  <Button color="blue" appearance="ghost" block>
+                    Continue with Facebook
+                  </Button>
+                </div>
+                <br />
+                <Button color="green" appearance="ghost" block>
                   Continue with Google
                 </Button>
-              </div>
-            </Panel>
-          </Col>
-        </Row>
-      </Grid>
-    </Container>
+
+                <center>
+                  <hr>
+                    {" "}
+                    <h4>OR</h4>
+                  </hr>
+                </center>
+                <Row>
+                  <Col>
+                    <Input placeholder="First Name" />{" "}
+                  </Col>
+                  <Col>&nbsp;</Col>
+                  <Col>
+                    <Input placeholder="Last Name" />
+                  </Col>
+                </Row>
+                <br />
+                <Input placeholder="Email/Mobile Number" />
+                <br />
+                <Input placeholder="Password" type="password" />
+                <br />
+                <p>
+                  It contains atleast 6-15 characters and one
+                  Uppercase,lowercase,Symbol,special characters and numbers.{" "}
+                </p>
+                <br />
+                <Input placeholder="Re-Enter Password" type="password" />
+                <br />
+                <p>Terms & Policy</p>
+                <br />
+                <Button color="violet" appearance="primary" block>
+                  Create An Account
+                </Button>
+                <br />
+                <center>
+                  {" "}
+                  <p>
+                    Already have an Account? <Link to="/"> Sign-In</Link>
+                  </p>
+                </center>
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
+      </Container>
+    </div>
   );
 };
 
